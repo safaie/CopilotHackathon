@@ -6,8 +6,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;;
-
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest()
 @AutoConfigureMockMvc 
@@ -17,10 +16,18 @@ class CopilotDemoApplicationTests {
     private MockMvc mockMvc;
 
     @Test
-	void hello() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/hello?key=world"))
-			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.content().string("hello world"));
-	}
+    void hello() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/hello?key=world"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string("hello world"));
+    }
 
+    @Test
+    void diffDates() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/diffdates")
+                .param("date1", "01-01-2025")
+                .param("date2", "10-01-2025"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string("Difference in days: 9"));
+    }
 }
